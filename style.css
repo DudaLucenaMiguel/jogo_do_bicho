@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+    --bg-dark: #0a0a0c;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --primary-neon: #00f2ff;
+    --secondary-neon: #7000ff;
+    --accent-pink: #ff00c8;
+    --text-main: #e0e0e0;
+    --text-dim: #a0a0a0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-dark);
+    background-image:
+        radial-gradient(circle at 20% 20%, rgba(112, 0, 255, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(0, 242, 255, 0.15) 0%, transparent 40%);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    width: 95%;
+    margin: 2rem auto;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    animation: fadeInDown 1s ease-out;
+}
+
+.logo-container {
+    position: relative;
+    display: inline-block;
+}
+
+.logo-container h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+    background: linear-gradient(to right, var(--primary-neon), var(--secondary-neon));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.logo-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, var(--primary-neon) 0%, transparent 70%);
+    opacity: 0.15;
+    filter: blur(20px);
+    z-index: -1;
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Betting Panel */
+.betting-panel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+    .betting-panel {
+        grid-template-columns: 1fr;
+    }
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-dim);
+    font-weight: 400;
+}
+
+.styled-input,
+.styled-select {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem;
+    color: white;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.styled-input:focus,
+.styled-select:focus {
+    outline: none;
+    border-color: var(--primary-neon);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+}
+
+.btn-bet {
+    width: 100%;
+    background: linear-gradient(45deg, var(--secondary-neon), var(--primary-neon));
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-bet:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(112, 0, 255, 0.3);
+}
+
+.btn-bet:active {
+    transform: translateY(0);
+}
+
+/* Result Reveal Area */
+.result-reveal {
+    text-align: center;
+    position: relative;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.antigravity-element {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--primary-neon), var(--secondary-neon));
+    border-radius: 50%;
+    margin-bottom: 2rem;
+    box-shadow: 0 0 40px rgba(0, 242, 255, 0.6);
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.antigravity-element::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 1px solid var(--primary-neon);
+    border-radius: 50%;
+    opacity: 0.3;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.3;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+.flying {
+    animation: float 4s infinite ease-in-out;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg) scale(1);
+    }
+
+    33% {
+        transform: translateY(-40px) rotate(120deg) scale(1.1);
+    }
+
+    66% {
+        transform: translateY(-20px) rotate(240deg) scale(0.9);
+    }
+}
+
+.result-content {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.result-content.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.result-bicho {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    color: gold;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+/* Bicho Grid */
+.bicho-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.bicho-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.bicho-card:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: var(--primary-neon);
+    transform: translateY(-5px);
+}
+
+.bicho-num {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+.bicho-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0.5rem 0;
+}
+
+.bicho-group {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-neon);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* PyScript Loading Styles */
+#loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: var(--primary-neon);
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

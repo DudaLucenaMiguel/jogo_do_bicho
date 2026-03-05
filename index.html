@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bicho-Gravity | Simulador Jogo do Bicho</title>
+    <meta name="description" content="Simulador moderno de Jogo do Bicho com tecnologia PyScript e estética Premium.">
+    
+    <!-- PyScript CSS & JS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="loading">
+        <span class="loader"></span>
+    </div>
+
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <h1>BICHO-GRAVITY</h1>
+                <div class="logo-glow"></div>
+            </div>
+            <p>Sinta a gravidade da sorte. Tecnologia PyScript.</p>
+        </header>
+
+        <section class="betting-panel glass-card">
+            <div class="bet-inputs">
+                <div class="input-group">
+                    <label for="bet-value">Valor da Aposta (R$)</label>
+                    <input type="number" id="bet-value" class="styled-input" placeholder="0.00" value="1.00" min="0.10" step="0.10">
+                </div>
+                
+                <div class="input-group">
+                    <label for="animal-select">Escolha seu Bicho</label>
+                    <select id="animal-select" class="styled-select">
+                        <!-- Will be populated by Python -->
+                    </select>
+                </div>
+
+                <button id="btn-bet" class="btn-bet" py-click="make_bet">Fazer Aposta</button>
+            </div>
+
+            <div class="result-reveal">
+                <div id="antigravity-orb" class="antigravity-element flying"></div>
+                <div id="result-content" class="result-content">
+                    <p id="result-status" style="color: var(--text-dim); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Resultado</p>
+                    <h2 id="result-bicho" class="result-bicho">--</h2>
+                    <p id="result-numbers" style="font-size: 1.2rem; color: var(--primary-neon);"></p>
+                    <p id="result-payout" style="margin-top: 1rem; font-weight: bold;"></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass-card">
+            <h2 style="margin-bottom: 2rem; color: var(--primary-neon);">Tabela de Referência</h2>
+            <div id="bicho-grid" class="bicho-grid">
+                <!-- Will be populated by Python -->
+            </div>
+        </section>
+    </div>
+
+    <!-- PyScript Logic -->
+    <script type="py" src="main.py" config='{"packages":[]}'></script>
+
+    <script>
+        // Simple loader handler
+        window.addEventListener('load', () => {
+            // Give PyScript a moment to initialize
+            setTimeout(() => {
+                document.getElementById('loading').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loading').style.display = 'none';
+                }, 500);
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
