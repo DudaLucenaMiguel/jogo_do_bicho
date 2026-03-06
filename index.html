@@ -24,7 +24,19 @@
                 <div class="logo-glow"></div>
             </div>
             <p>Sinta a gravidade da sorte. Tecnologia PyScript.</p>
+            <div class="balance-container glass-card">
+                <span>Saldo:</span>
+                <span id="balance-value">R$ 200,00</span>
+            </div>
         </header>
+
+        <div id="game-over" class="game-over-overlay" style="display: none;">
+            <div class="game-over-content glass-card">
+                <h2>FALÊNCIA!</h2>
+                <p>Você gastou todo o seu dinheiro.</p>
+                <button onclick="window.location.reload()" class="btn-bet">Recomeçar</button>
+            </div>
+        </div>
 
         <section class="betting-panel glass-card">
             <div class="bet-inputs">

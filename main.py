@@ -31,6 +31,19 @@ ANIMALS = [
     {"group": "25", "name": "Vaca", "numbers": "97-00"},
 ]
 
+# Global State
+balance = 200.0
+
+def update_balance_display():
+    el = document.getElementById("balance-value")
+    el.innerText = f"R$ {balance:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+def check_bankruptcy():
+    if balance <= 0:
+        document.getElementById("game-over").style.display = "flex"
+        return True
+    return False
+
 def init():
     # Populate Animal Select
     select_el = document.getElementById("animal-select")
@@ -52,13 +65,34 @@ def init():
             <div class="bicho-group">{animal['group']}</div>
         """
         grid_el.appendChild(card)
+    
+    update_balance_display()
 
 async def make_bet(event):
+    global balance
+    
     btn = document.getElementById("btn-bet")
     val_input = document.getElementById("bet-value")
     animal_select = document.getElementById("animal-select")
     
-    bet_value = float(val_input.value)
+    try:
+        bet_value = float(val_input.value)
+    except ValueError:
+        window.alert("Por favor, insira um valor válido.")
+        return
+
+    if bet_value <= 0:
+        window.alert("O valor da aposta deve ser maior que zero.")
+        return
+
+    if bet_value > balance:
+        window.alert("Saldo insuficiente!")
+        return
+    
+    # Deduct bet
+    balance -= bet_value
+    update_balance_display()
+    
     chosen_group = animal_select.value
     
     # UI Reset
@@ -75,12 +109,8 @@ async def make_bet(event):
     
     # Game Logic
     winning_number = random.randint(0, 9999)
-    # The result of Jogo do Bicho is based on the last 2 digits for simple group betting
     last_two = winning_number % 100
     
-    # Map last_two to group
-    # 01-04 -> 01, 05-08 -> 02, ..., 97-00 -> 25
-    # Special case for 00 which is group 25
     if last_two == 0:
         winning_group_idx = 24 # Vaca
     else:
@@ -97,10 +127,12 @@ async def make_bet(event):
     bicho_el.innerText = winning_animal["name"]
     numbers_el.innerText = f"Número Sorteado: {winning_number:04d} ({last_two:02d})"
     
+    payout = 0
     if winning_animal["group"] == chosen_group:
         status_el.innerText = "PARABÉNS! VOCÊ GANHOU!"
         status_el.style.color = "#00ff88"
         payout = bet_value * 18 # Group payout multiplier
+        balance += payout
         payout_el.innerText = f"Ganho: R$ {payout:.2f}"
         payout_el.style.color = "#00ff88"
     else:
@@ -109,12 +141,17 @@ async def make_bet(event):
         payout_el.innerText = "Sorte na próxima!"
         payout_el.style.color = "var(--accent-pink)"
 
+    update_balance_display()
+
     # Final Reveal
     orb.style.animation = "float 2s infinite ease-in-out" # Back to normal
     document.getElementById("result-content").classList.add("show")
     
     btn.disabled = False
     btn.innerText = "Fazer Aposta"
+    
+    # Check if user went broke after the payout (unlikely to be exactly 0 if winning but good to check)
+    check_bankruptcy()
 
 # Initialize
 init()
